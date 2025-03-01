@@ -2,10 +2,10 @@
 int main() {
     double matrix[3][3];
     double main_diagonal_sum = 0.0, secondary_diagonal_sum = 0.0;
-    printf("Введите значения для матрицы 3x3:\n");
+    printf("Г‚ГўГҐГ¤ГЁГІГҐ Г§Г­Г Г·ГҐГ­ГЁГї Г¤Г«Гї Г¬Г ГІГ°ГЁГ¶Г» 3x3:\n");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            printf("Элемент [%d][%d]: ", i + 1, j + 1);
+            printf("ГќГ«ГҐГ¬ГҐГ­ГІ [%d][%d]: ", i + 1, j + 1);
             scanf("%lf", &matrix[i][j]);
         }
     }
@@ -15,7 +15,7 @@ int main() {
     for (int i = 0; i < 3; i++) {
         secondary_diagonal_sum += matrix[i][2 - i];
     }
-    printf("Сумма элементов на главной диагонали: %.2lf\n", main_diagonal_sum);
-    printf("Сумма элементов на побочной диагонали: %.2lf\n", secondary_diagonal_sum);
+    printf("Г‘ГіГ¬Г¬Г  ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў Г­Г  ГЈГ«Г ГўГ­Г®Г© Г¤ГЁГ ГЈГ®Г­Г Г«ГЁ: %.2lf\n", main_diagonal_sum);
+    printf("Г‘ГіГ¬Г¬Г  ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў Г­Г  ГЇГ®ГЎГ®Г·Г­Г®Г© Г¤ГЁГ ГЈГ®Г­Г Г«ГЁ: %.2lf\n", secondary_diagonal_sum);
     return 0;
 }
