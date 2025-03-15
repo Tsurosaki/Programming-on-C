@@ -27,6 +27,6 @@ int main(int argc, char *argv[]) {
 	}
 	    printf("Ðåøèòü ñíîâà?");
 	    scanf("%c", &choice);
-} while (choice == 'y'|| choice == 'Y');
+} while (choice == 'y');
 	return 0;
 }
