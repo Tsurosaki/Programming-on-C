@@ -25,8 +25,10 @@ int main(int argc, char *argv[]) {
 	else {
 		printf("Êîðíåé íåò, äèñêðèìèíàíò ìåíüøå íóëÿ.\n");
 	}
-	    printf("Ðåøèòü ñíîâà?");
-	    scanf("%c", &choice);
+	    printf("Ðåøèòü ñíîâà?\n");
+	    while (getchar() != '\n');
+	    scanf("%c", &choice);    
+	    printf("choice = %c \n", choice);
 } while (choice == 'y');
 	return 0;
 }
