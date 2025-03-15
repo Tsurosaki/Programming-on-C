@@ -6,6 +6,8 @@
 int main(int argc, char *argv[]) {
 	double a, b, c;
 	double x, x1, x2, d;
+	char choice;
+	do {
 	a = 5.3;
 	b = 12.5;
 	c = 1.1;
@@ -21,7 +23,10 @@ int main(int argc, char *argv[]) {
 	    printf("x = %lf\n", x);
 	}
 	else {
-		printf("Корней нет, дискриминант меньше нуля.\n");
+		printf("Êîðíåé íåò, äèñêðèìèíàíò ìåíüøå íóëÿ.\n");
 	}
+	    printf("Ðåøèòü ñíîâà?");
+	    scanf("%c", &choice);
+} while (choice == 'y'|| choice == 'Y');
 	return 0;
 }
