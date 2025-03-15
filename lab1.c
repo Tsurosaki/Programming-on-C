@@ -5,18 +5,23 @@
 
 int main(int argc, char *argv[]) {
 	double a, b, c;
-	double x1, x2, d;
+	double x, x1, x2, d;
 	a = 5.3;
 	b = 12.5;
 	c = 1.1;
 	d = b*b - 4*a*c;
-	if (d>=0) {
+	if (d > 0) {
 		x1 = -b/(2*a) + sqrt(d)/(2*a);
 		x2 = -b/(2*a) - sqrt(d)/(2*a);
 		printf("x1 = %lf\n", x1);
 		printf("x2 = %lf\n", x2);
-	} else {
-		printf("Корней нет, дискриминант меньше нуля. \n");
+	} 
+	if (d = 0) {
+	    x = -b/(2*a);
+	    printf("x = %lf\n", x);
+	}
+	else {
+		printf("РљРѕСЂРЅРµР№ РЅРµС‚, РґРёСЃРєСЂРёРјРёРЅР°РЅС‚ РјРµРЅСЊС€Рµ РЅСѓР»СЏ.\n");
 	}
 	return 0;
 }
