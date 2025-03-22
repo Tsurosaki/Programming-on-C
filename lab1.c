@@ -8,9 +8,8 @@ int main(int argc, char *argv[]) {
 	double x, x1, x2, d;
 	char choice;
 	do {
-	a = 5.3;
-	b = 12.5;
-	c = 1.1;
+	printf("Ваши значения a, b, c:\n");
+	scanf("%lf %lf %lf", &a, &b, &c);
 	d = b*b - 4*a*c;
 	if (d > 0) {
 		x1 = -b/(2*a) + sqrt(d)/(2*a);
@@ -23,9 +22,9 @@ int main(int argc, char *argv[]) {
 	    printf("x = %lf\n", x);
 	}
 	else {
-		printf("Êîðíåé íåò, äèñêðèìèíàíò ìåíüøå íóëÿ.\n");
+		printf("Дискриминант меньше нуля, корней нет.\n");
 	}
-	    printf("Ðåøèòü ñíîâà?\n");
+	    printf("Хотите ещё решить?\n");
 	    while (getchar() != '\n');
 	    scanf("%c", &choice);    
 	    printf("choice = %c \n", choice);
