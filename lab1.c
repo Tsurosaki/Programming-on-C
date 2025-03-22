@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	    x = -b/(2*a);
 	    printf("x = %lf\n", x);
 	}
-	else {
+	else if (d < 0) {
 		printf("Дискриминант меньше нуля, корней нет.\n");
 	}
 	    printf("Хотите ещё решить?\n");
