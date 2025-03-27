@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+/* Объявить вещественные переменные a, b и с и задать их значения. 
+Предполагая, что a, b, c есть коэффициенты квадратного уравнения вывести на консоль значения их корней х1, х2. 
+Следует подобрать такие значения коэффициентов, при которых корни будут существовать. */
 
 int main(int argc, char *argv[]) {
 	double a, b, c;
