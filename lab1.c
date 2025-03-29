@@ -1,35 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-/* Объявить вещественные переменные a, b и с и задать их значения. 
-Предполагая, что a, b, c есть коэффициенты квадратного уравнения вывести на консоль значения их корней х1, х2. 
-Следует подобрать такие значения коэффициентов, при которых корни будут существовать. */
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
 	double a, b, c;
-	double x, x1, x2, d;
+	double x1, x2, x, d;
 	char choice;
 	do {
-	printf("Ваши значения a, b, c:\n");
+	printf("Вам необходимо ввести ваши значения: \n");
 	scanf("%lf %lf %lf", &a, &b, &c);
-	d = b*b - 4*a*c;
+	d = (b*b) - (4*a*c);
+	printf("%lf\n", d);
 	if (d > 0) {
-		x1 = -b/(2*a) + sqrt(d)/(2*a);
-		x2 = -b/(2*a) - sqrt(d)/(2*a);
+		x1 = -b + sqrt(d)/(2*a);
+		x2 = -b - sqrt(d)/(2*a);
 		printf("x1 = %lf\n", x1);
 		printf("x2 = %lf\n", x2);
-	} 
-	if (d = 0) {
-	    x = -b/(2*a);
-	    printf("x = %lf\n", x);
 	}
-	else if (d < 0) {
-		printf("Дискриминант меньше нуля, корней нет.\n");
+	else if (d == 0) {
+		x = -b/(2*a);
+		printf("x = %lf\n", x);
 	}
-	    printf("Хотите ещё решить?\n");
-	    while (getchar() != '\n');
-	    scanf("%c", &choice);    
-	    printf("choice = %c \n", choice);
-} while (choice == 'y');
+	else {
+		printf("Дискриминант меньше нуля, корней нет\n");
+	}
+	    printf("Хотите начать ещё раз? \n");
+	    while(getchar () != '\n');
+	    scanf("%c", &choice);
+	    printf("choice = %c\n", choice);
+} while(choice == 'x');
 	return 0;
 }
