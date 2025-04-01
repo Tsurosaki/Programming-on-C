@@ -4,10 +4,10 @@ int main() {
     int matrix_int[2][2];
     int matrix_square[2][2] = {0};
 
-    printf("Ââåäèòå 4 çíà÷åíèÿ äëÿ ìàòðèöû 2x2:\n");
+    printf("Вам нужно ввести 4 для матрицы 2x2:\n");
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
-            printf("Ýëåìåíò [%d][%d]: ", i, j);
+            printf("Элемент [%d][%d]: ", i, j);
             scanf("%d", &matrix_int[i][j]);
         }
     }
