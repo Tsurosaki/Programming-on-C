@@ -3,7 +3,6 @@
 int main() {
     int matrix_int[2][2];
     int matrix_square[2][2] = {0};
-
     printf("Вам нужно ввести 4 для матрицы 2x2:\n");
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
@@ -11,7 +10,6 @@ int main() {
             scanf("%d", &matrix_int[i][j]);
         }
     }
-
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             for (int k = 0; k < 2; k++) {
@@ -19,14 +17,12 @@ int main() {
             }
         }
     }
-
-    printf("Êâàäðàò ìàòðèöû:\n");
+    printf("Квадрат матрицы:\n");
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             printf("%d ", matrix_square[i][j]);
         }
         printf("\n");
     }
-
     return 0;
 }
