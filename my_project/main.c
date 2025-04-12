@@ -21,7 +21,14 @@ int main() {
         double area = calculate_area(a, b, c);
         printf("Периметр треугольника: %.2lf\n", perimeter);
         printf("Площадь треугольника: %.2lf\n", area);
-    } else {
+        double base;
+        printf("Введите длину основания для вычисления высоты: ");
+        scanf("%lf", &base);
+    
+        double height = calculate_height(area, base);
+        printf("Высота треугольника по основанию %.2lf: %.2lf\n", base, height);
+    } 
+    else {
         printf("Ошибка: введенные длины не могут образовать треугольник.\n");
     }
 
