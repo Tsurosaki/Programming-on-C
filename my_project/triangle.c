@@ -11,6 +11,6 @@ double calculate_area(double a, double b, double c) {
     return sqrt(s * (s - a) * (s - b) * (s - c));
 }
 
-double calculate_height(double area, double base) {
-    return (2 * area) / base; // Высота по основанию
+double calculate_height(double area, double site) {
+    return (2 * area) / site;
 }
