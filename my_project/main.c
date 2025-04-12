@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include "triangle.h"
-
 // Функция для проверки, является ли тройка чисел длинами сторон треугольника
 int is_valid_triangle(double a, double b, double c) {
     return (a + b > c) && (a + c > b) && (b + c > a);
 }
-
 int main() {
     double a, b, c;
 
@@ -21,16 +19,15 @@ int main() {
         double area = calculate_area(a, b, c);
         printf("Периметр треугольника: %.2lf\n", perimeter);
         printf("Площадь треугольника: %.2lf\n", area);
-        double base;
+        double site;
         printf("Введите длину основания для вычисления высоты: ");
-        scanf("%lf", &base);
+        scanf("%lf", &site);
     
-        double height = calculate_height(area, base);
-        printf("Высота треугольника по основанию %.2lf: %.2lf\n", base, height);
+        double height = calculate_height(area, a);
+        printf("Высота треугольника по основанию %.2lf: %.2lf\n", a, height);
     } 
     else {
         printf("Ошибка: введенные длины не могут образовать треугольник.\n");
     }
-
     return 0;
 }
