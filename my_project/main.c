@@ -7,11 +7,11 @@ int is_valid_triangle(double a, double b, double c) {
 int main() {
     double a, b, c;
 
-    printf("Введите длину первой стороны треугольника: ");
+    printf("Длина первой стороны треугольника: ");
     scanf("%lf", &a);
-    printf("Введите длину второй стороны треугольника: ");
+    printf("Длина второй стороны треугольника: ");
     scanf("%lf", &b);
-    printf("Введите длину третьей стороны треугольника: ");
+    printf("Длина третьей стороны треугольника: ");
     scanf("%lf", &c);
 
     if (is_valid_triangle(a, b, c)) {
@@ -20,14 +20,14 @@ int main() {
         printf("Периметр треугольника: %.2lf\n", perimeter);
         printf("Площадь треугольника: %.2lf\n", area);
         double site;
-        printf("Введите длину основания для вычисления высоты: ");
+        printf("Длина основания для вычисления высоты: ");
         scanf("%lf", &site);
     
         double height = calculate_height(area, a);
         printf("Высота треугольника по основанию %.2lf: %.2lf\n", a, height);
     } 
     else {
-        printf("Ошибка: введенные длины не могут образовать треугольник.\n");
+        printf("Введенные длины не могут образовать треугольник.\n");
     }
     return 0;
 }
