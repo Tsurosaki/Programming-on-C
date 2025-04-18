@@ -1,6 +1,5 @@
 #include <math.h>
 
-// Функция для вычисления периметра треугольника
 double calculate_perimeter(double a, double b, double c) {
     return a + b + c;
 }
