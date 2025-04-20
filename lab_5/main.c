@@ -8,7 +8,6 @@ int main() {
     printf("Введите размерность матриц n: ");
     scanf("%d", &n);
     
-    // Выделение памяти для матриц
     double **matrix1 = (double **)malloc(n * sizeof(double *));
     double **matrix2 = (double **)malloc(n * sizeof(double *));
     double **result = (double **)malloc(n * sizeof(double *));
