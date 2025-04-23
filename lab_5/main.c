@@ -17,7 +17,6 @@ int main() {
         result[i] = (double *)malloc(n * sizeof(double));
     }
 
-    // Ввод элементов первой матрицы
     printf("Введите элементы первой матрицы:\n");
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
