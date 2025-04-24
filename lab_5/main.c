@@ -22,7 +22,6 @@ int main() {
         for (int j = 0; j < n; j++)
             scanf("%lf", &matrix1[i][j]);
 
-    // Ввод элементов второй матрицы
     printf("Введите элементы второй матрицы:\n");
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
