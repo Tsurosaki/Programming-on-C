@@ -27,7 +27,6 @@ int main() {
         for (int j = 0; j < n; j++)
             scanf("%lf", &matrix2[i][j]);
 
-    // Ввод операции
     printf("Введите операцию (+, -, *): ");
     scanf(" %c", &operation);
 
