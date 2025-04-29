@@ -13,12 +13,12 @@ int main(int argc, char *argv[]) {
 
     input = fopen("input.txt", "r");
     if (input == NULL) {
-        perror("Не удалось открыть входной файл");
+        perror("ГЌГҐ ГіГ¤Г Г«Г®Г±Гј Г®ГІГЄГ°Г»ГІГј ГўГµГ®Г¤Г­Г®Г© ГґГ Г©Г«");
         return EXIT_FAILURE;
     }
     output = fopen("output.txt", "w+");
     if (output == NULL) {
-        perror("Не удалось открыть выходной файл");
+        perror("ГЌГҐ ГіГ¤Г Г«Г®Г±Гј Г®ГІГЄГ°Г»ГІГј ГўГ»ГµГ®Г¤Г­Г®Г© ГґГ Г©Г«");
         fclose(input);
         return EXIT_FAILURE;
 }
@@ -29,14 +29,14 @@ int main(int argc, char *argv[]) {
                 fprintf(output, "%s", line);
             }
         } else {
-            printf("Ошибка формата строки: %s", line);
+            printf("ГЋГёГЁГЎГЄГ  ГґГ®Г°Г¬Г ГІГ  Г±ГІГ°Г®ГЄГЁ: %s", line);
         }
     }
 
     fclose(input);
     fclose(output);
 
-    printf("Обработка завершена. Результат записан в output.txt\n");
+    printf("ГЋГЎГ°Г ГЎГ®ГІГЄГ  Г§Г ГўГҐГ°ГёГҐГ­Г . ГђГҐГ§ГіГ«ГјГІГ ГІ Г§Г ГЇГЁГ±Г Г­ Гў output.txt\n");
 
     return 0;
 }
