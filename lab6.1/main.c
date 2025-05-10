@@ -13,12 +13,12 @@ int main(int argc, char *argv[]) {
 
     input = fopen("input.txt", "r");
     if (input == NULL) {
-        perror("Íå óäàëîñü îòêðûòü âõîäíîé ôàéë");
+        perror("Первый файл открыть не удалось");
         return EXIT_FAILURE;
     }
     output = fopen("output.txt", "w+");
     if (output == NULL) {
-        perror("Íå óäàëîñü îòêðûòü âûõîäíîé ôàéë");
+        perror("Второй файл открыть не удалось");
         fclose(input);
         return EXIT_FAILURE;
 }
@@ -29,14 +29,14 @@ int main(int argc, char *argv[]) {
                 fprintf(output, "%s", line);
             }
         } else {
-            printf("Îøèáêà ôîðìàòà ñòðîêè: %s", line);
+            printf("Ошибка формата строки: %s", line);
         }
     }
 
     fclose(input);
     fclose(output);
 
-    printf("Îáðàáîòêà çàâåðøåíà. Ðåçóëüòàò çàïèñàí â output.txt\n");
+    printf("Изменения сохранены в output.txt\n");
 
     return 0;
 }
