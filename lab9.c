@@ -2,109 +2,46 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
-#define MAX_TOKENS 100
-
-int is_operator(char c) {
-    return c == '+' || c == '-';
-}
-
-double calculate_expression(const char *input) {
-    char expr[1024];
-    strncpy(expr, input, sizeof(expr) - 1);
-    expr[sizeof(expr) - 1] = '\0';
-
-    double numbers[MAX_TOKENS];
-    char operators[MAX_TOKENS];
-    int num_count = 0, op_count = 0;
-
-    char processed[2048];
-    int j = 0;
-    for (int i = 0; expr[i] != '\0'; i++) {
-        if (expr[i] == '+' || expr[i] == '-') {
-            if (i > 0 && processed[j-1] != ' ') {
-                processed[j++] = ' ';
-            }
-            processed[j++] = expr[i];
-            if (expr[i+1] != ' ' && expr[i+1] != '\0') {
-                processed[j++] = ' ';
-            }
-        } else if (expr[i] != ' ') {
-            processed[j++] = expr[i];
-        } else {
-        }
-    }
-    processed[j] = '\0';
-
-    char *token = strtok(processed, " ");
-    int expect_number = 1;
-
+double calculate(const char *expression) {
+    double result = 0.0;
+    char *token;
+    char *expr_copy = strdup(expression); // Создаем копию строки для разбора
+    token = strtok(expr_copy, " "); // Разбиваем строку по пробелам
+    double current_value = 0.0; // Текущая числовая величина
+    char operation = '+'; // Начальная операция (по умолчанию сложение)
     while (token != NULL) {
-        if (expect_number) {
-            if ((strcmp(token, "+") == 0 || strcmp(token, "-") == 0)) {
-                char sign = token[0];
-                token = strtok(NULL, " ");
-                if(token == NULL) {
-                    fprintf(stderr, "Ошибка: неподходящий формат выражения\n");
-                    exit(1);
-                }
-                char number_str[100];
-                if (sign == '-')
-                    snprintf(number_str, sizeof(number_str), "-%s", token);
-                else
-                    snprintf(number_str, sizeof(number_str), "%s", token);
+        // Проверяем, является ли токен числом
+        if (isdigit(token[0]) || (token[0] == '-' && isdigit(token[1]))) {
+            current_value = atof(token); // Преобразуем токен в число
 
-                double val = strtod(number_str, NULL);
-                numbers[num_count++] = val;
-            } else {
-                double val = strtod(token, NULL);
-                numbers[num_count++] = val;
+            // Выполняем операцию в зависимости от предыдущей операции
+            switch (operation) {
+                case '+':
+                    result += current_value;
+                    break;
+                case '-':
+                    result -= current_value;
+                    break;
             }
-            expect_number = 0;
-        } else {
-            if (strlen(token) != 1 || !is_operator(token[0])) {
-                fprintf(stderr, "Ошибка: ожидался оператор '+/-', а получено: %s\n", token);
-                exit(1);
-            }
-            operators[op_count++] = token[0];
-            expect_number = 1;
+        } else if (token[0] == '+' || token[0] == '-') {
+            operation = token[0]; // Обновляем текущую операцию
         }
 
-        token = strtok(NULL, " ");
+        token = strtok(NULL, " "); // Переходим к следующему токену
     }
 
-    if (num_count == 0) {
-        fprintf(stderr, "Ошибка: нет чисел для вычисления\n");
-        exit(1);
-    }
-    if (num_count != op_count + 1) {
-        fprintf(stderr, "Ошибка: несоответствие количества чисел и операций\n");
-        exit(1);
-    }
-
-    double result = numbers[0];
-    for (int i = 0; i < op_count; i++) {
-        if (operators[i] == '+') {
-            result += numbers[i+1];
-        } else if (operators[i] == '-') {
-            result -= numbers[i+1];
-        }
-    }
-    return result;
+    free(expr_copy); // Освобождаем память, выделенную для копии строки
+    return result; // Возвращаем результат вычисления
 }
 
 int main() {
-    char input[1024];
-    printf("Введите выражение: ");
-    if (fgets(input, sizeof(input), stdin) == NULL) {
-        fprintf(stderr, "Ошибка при вводе\n");
-        return 1;
-    }
+    char expression[256]; // Буфер для ввода выражения
 
-    input[strcspn(input, "\\n")] = '\0';
+    printf("Введите арифметическое выражение: ");
+    fgets(expression, sizeof(expression), stdin); // Читаем ввод пользователя
 
-    double result = calculate_expression(input);
-    printf("Результат: %.10g\n", result);
+    double result = calculate(expression); // Вычисляем результат
+    printf("Результат: %.2f\n", result); // Выводим результат
 
-    return 0;
+    return 0; // Завершаем программу с кодом возврата 0 (успешно)
 }
