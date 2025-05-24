@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <setjmp.h>
+
+jmp_buf env;
+
+int fib_sum(int n, int current, int next, int sum) {
+    if (n == 0) {
+        longjmp(env, sum + 0); // Возвращаем сумму, когда n достигает 0
+    }
+    return fib_sum(n - 1, next, current + next, sum + current);
+}
+
+int main() {
+    int n;
+    printf("Введите количество чисел Фибоначчи для суммирования: ");
+    scanf("%d", &n);
+
+    int sum = setjmp(env);
+    if (sum == 0) {
+        fib_sum(n, 1, 1, 0);
+    } else {
+        printf("Сумма первых %d чисел Фибоначчи: %d\n", n, sum);
+    }
+
+    return 0;
+}
