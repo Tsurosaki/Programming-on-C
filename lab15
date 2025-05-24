@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // Функция для вывода цифр числа в обычном порядке
 void printDigitsForward(int n) {
@@ -20,10 +21,21 @@ void printDigitsBackward(int n) {
     }
 }
 
+// Функция для проверки натуральности числа (рекурсивная)
+void checkNatural(int n) {
+    if (n <= 0) {
+        printf("Ошибка: число должно быть натуральным (1, 2, 3, ...)\n");
+        exit(1); // Завершаем программу с кодом ошибки
+    }
+}
+
 int main() {
     int N;
     printf("Введите натуральное число: ");
     scanf("%d", &N);
+
+    // Проверка на натуральность без циклов
+    checkNatural(N);
 
     printf("Цифры в обычном порядке: ");
     printDigitsForward(N);
