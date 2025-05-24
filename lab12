@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <time.h>
+#include <string.h>
+#include <stdlib.h>
+
+int is_leap_year(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+int get_days_in_month(int year, int month) {
+    int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (month == 2 && is_leap_year(year)) {
+        return 29;
+    }
+    return days[month - 1];
+}
+
+int get_day_of_week(int year, int month, int day) {
+    struct tm time_struct = {0};
+    time_struct.tm_year = year - 1900;
+    time_struct.tm_mon = month - 1;
+    time_struct.tm_mday = day;
+    time_struct.tm_hour = 0;
+    mktime(&time_struct);
+    return time_struct.tm_wday;
+}
+
+void print_month_calendar(int year, int month) {
+    printf("    %d-%02d\n", year, month);
+    printf("Su Mo Tu We Th Fr Sa\n");
+
+    int first_day = get_day_of_week(year, month, 1);
+    int days_in_month = get_days_in_month(year, month);
+
+    for (int i = 0; i < first_day; i++) {
+        printf("   ");
+    }
+
+    for (int day = 1; day <= days_in_month; day++) {
+        printf("%2d ", day);
+        if ((day + first_day) % 7 == 0 || day == days_in_month) {
+            printf("\n");
+        }
+    }
+}
+
+void print_year_calendar(int year) {
+    for (int month = 1; month <= 12; month++) {
+        print_month_calendar(year, month);
+        printf("\n");
+    }
+}
+
+void print_current_date() {
+    time_t t = time(NULL);
+    struct tm *now = localtime(&t);
+    printf("Current date: %d-%02d-%02d\n", now->tm_year + 1900, now->tm_mon + 1, now->tm_mday);
+}
+
+void print_day_of_week(int year, int month, int day) {
+    const char *days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    int day_index = get_day_of_week(year, month, day);
+    printf("%d-%02d-%02d is a %s\n", year, month, day, days[day_index]);
+}
+
+int main() {
+    char input[20];
+    printf("Enter date (format: year,month,day / year,month / year / now): ");
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+
+    if (strcmp(input, "now") == 0) {
+        print_current_date();
+        return 0;
+    }
+
+    char *token = strtok(input, ",");
+    int year = atoi(token);
+    token = strtok(NULL, ",");
+    
+    if (token == NULL) {
+        print_year_calendar(year);
+        return 0;
+    }
+
+    int month = atoi(token);
+    token = strtok(NULL, ",");
+    
+    if (token == NULL) {
+        print_month_calendar(year, month);
+        return 0;
+    }
+
+    int day = atoi(token);
+    print_day_of_week(year, month, day);
+
+    return 0;
+}
