@@ -1,16 +1,15 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_NUMBERS 100
+#define MIN_NUMBERS 100
 
-#define MAX_IN_ARRAY(arr, count) ({        \
-    int max_val = (count) > 0 ? (arr)[0] : 0;  \
+#define MIN_IN_ARRAY(arr, count) ({        \
+    int min_val = (count) > 0 ? (arr)[0] : 0;  \
     for (int i = 1; i < (count); ++i) {   \
-        if ((arr)[i] > max_val)            \
-            max_val = (arr)[i];            \
+        if ((arr)[i] < min_val)            \
+            min_val = (arr)[i];            \
     }                                     \
-    max_val;                              \
+    min_val;                              \
 })
 
 #define AVERAGE(arr, count) ((count) == 0 ? 0 : ({ \
@@ -23,7 +22,7 @@
 
 int main() {
     char input[1024];
-    int numbers[MAX_NUMBERS];
+    int numbers[MIN_NUMBERS];
     int count = 0;
 
     printf("Введите числа через пробел: ");
@@ -34,7 +33,7 @@ int main() {
     input[strcspn(input, "\n")] = 0;
 
     char *token = strtok(input, " ");
-    while (token != NULL && count < MAX_NUMBERS) {
+    while (token != NULL && count < MIN_NUMBERS) {
         numbers[count++] = atoi(token);
         token = strtok(NULL, " ");
     }
@@ -43,10 +42,10 @@ int main() {
         return 1;
     }
 
-    int max_value = MAX_IN_ARRAY(numbers, count);
+    int min_value = MIN_IN_ARRAY(numbers, count);
     double avg_value = AVERAGE(numbers, count);
     
-    printf("Максимальное число: %d\n", max_value);
+    printf("Максимальное число: %d\n", min_value);
     printf("Среднее арифметическое: %.2f\n", avg_value);
 
     return 0;
