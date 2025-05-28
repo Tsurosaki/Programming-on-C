@@ -21,6 +21,5 @@ int main() {
     } else {
         printf("Сумма первых %d чисел Фибоначчи: %d\n", n, sum);
     }
-
     return 0;
 }
