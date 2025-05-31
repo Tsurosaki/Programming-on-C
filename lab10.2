@@ -1,8 +1,20 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MIN_NUMBERS 100
+#define MAX_NUMBERS 100
 
+// Макрос для нахождения максимального значения
+#define MAX_IN_ARRAY(arr, count) ({        \
+    int max_val = (count) > 0 ? (arr)[0] : 0;  \
+    for (int i = 1; i < (count); ++i) {   \
+        if ((arr)[i] > max_val)            \
+            max_val = (arr)[i];            \
+    }                                     \
+    max_val;                              \
+})
+
+// Макрос для нахождения минимального значения
 #define MIN_IN_ARRAY(arr, count) ({        \
     int min_val = (count) > 0 ? (arr)[0] : 0;  \
     for (int i = 1; i < (count); ++i) {   \
@@ -12,17 +24,18 @@
     min_val;                              \
 })
 
-#define AVERAGE(arr, count) ((count) == 0 ? 0 : ({ \
-    double sum = 0; \
-    for (int i = 0; i < (count); ++i) { \
-        sum += (arr)[i]; \
-    } \
-    sum / (count); \
-}))
+// Макрос для вычисления среднего арифметического
+#define AVG_IN_ARRAY(arr, count) ({        \
+    double sum = 0;                        \
+    for (int i = 0; i < (count); ++i) {   \
+        sum += (arr)[i];                   \
+    }                                     \
+    (count) > 0 ? (sum / (count)) : 0;    \
+})
 
 int main() {
     char input[1024];
-    int numbers[MIN_NUMBERS];
+    int numbers[MAX_NUMBERS];
     int count = 0;
 
     printf("Введите числа через пробел: ");
@@ -33,7 +46,7 @@ int main() {
     input[strcspn(input, "\n")] = 0;
 
     char *token = strtok(input, " ");
-    while (token != NULL && count < MIN_NUMBERS) {
+    while (token != NULL && count < MAX_NUMBERS) {
         numbers[count++] = atoi(token);
         token = strtok(NULL, " ");
     }
@@ -42,10 +55,12 @@ int main() {
         return 1;
     }
 
+    int max_value = MAX_IN_ARRAY(numbers, count);
     int min_value = MIN_IN_ARRAY(numbers, count);
-    double avg_value = AVERAGE(numbers, count);
-    
-    printf("Максимальное число: %d\n", min_value);
+    double avg_value = AVG_IN_ARRAY(numbers, count);
+
+    printf("Максимальное число: %d\n", max_value);
+    printf("Минимальное число: %d\n", min_value);
     printf("Среднее арифметическое: %.2f\n", avg_value);
 
     return 0;
