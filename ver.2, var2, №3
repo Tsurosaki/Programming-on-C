@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    printf("Введите количество чисел: ");
+    scanf("%d", &N);
+    
+    int numbers[N];
+    FILE *input = fopen("input.txt", "r");
+    for (int i = 0; i < N; i++) {
+        fscanf(input, "%d", &numbers[i]);
+    }
+    fclose(input);
+    
+    int M;
+    printf("Введите количество столбцов: ");
+    scanf("%d", &M);
+    
+    int rows = (N + M - 1) / M; // Вычисляем количество строк
+    int matrix[rows][M];
+    int index = 0;
+    
+    // Заполняем матрицу
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < M; j++) {
+            if (index < N) {
+                matrix[i][j] = numbers[index++];
+            } else {
+                matrix[i][j] = 0; // Заполняем нулями, если чисел не хватает
+            }
+        }
+    }
+    
+    // Выводим матрицу
+    printf("Матрица:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < M; j++) {
+            printf("%d\t", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    
+    // Суммы строк
+    printf("\nСуммы строк:\n");
+    for (int i = 0; i < rows; i++) {
+        int sum = 0;
+        for (int j = 0; j < M; j++) {
+            sum += matrix[i][j];
+        }
+        printf("Строка %d: %d\n", i + 1, sum);
+    }
+    
+    // Суммы столбцов
+    printf("\nСуммы столбцов:\n");
+    for (int j = 0; j < M; j++) {
+        int sum = 0;
+        for (int i = 0; i < rows; i++) {
+            sum += matrix[i][j];
+        }
+        printf("Столбец %d: %d\n", j + 1, sum);
+    }
+    
+    return 0;
+}
