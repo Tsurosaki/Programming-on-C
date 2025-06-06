@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+int main() {
+    int size;
+    printf("Введите размер матриц: ");
+    scanf("%d", &size);
+    
+    // Читаем матрицы из файла
+    int matrix1[size][size], matrix2[size][size];
+    FILE *input = fopen("input.txt", "r");
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fscanf(input, "%d", &matrix1[i][j]);
+        }
+    }
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fscanf(input, "%d", &matrix2[i][j]);
+        }
+    }
+    fclose(input);
+    
+    // Сложение матриц
+    int sum[size][size];
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            sum[i][j] = matrix1[i][j] + matrix2[i][j];
+        }
+    }
+    
+    // Умножение матриц
+    int product[size][size];
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            product[i][j] = 0;
+            for (int k = 0; k < size; k++) {
+                product[i][j] += matrix1[i][k] * matrix2[k][j];
+            }
+        }
+    }
+    
+    // Записываем результаты в файл
+    FILE *output = fopen("output.txt", "w");
+    fprintf(output, "Сумма матриц:\n");
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fprintf(output, "%d ", sum[i][j]);
+        }
+        fprintf(output, "\n");
+    }
+    fprintf(output, "\nПроизведение матриц:\n");
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fprintf(output, "%d ", product[i][j]);
+        }
+        fprintf(output, "\n");
+    }
+    fclose(output);
+    
+    printf("Результаты сохранены в output.txt\n");
+    return 0;
+}
