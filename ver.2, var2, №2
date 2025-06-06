@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    printf("Введите количество чисел: ");
+    scanf("%d", &N);
+    
+    int numbers[N];
+    FILE *input = fopen("input.txt", "r");
+    for (int i = 0; i < N; i++) {
+        fscanf(input, "%d", &numbers[i]);
+    }
+    fclose(input);
+    
+    FILE *output = fopen("output.txt", "w");
+    for (int i = 0; i < N; i++) {
+        if (numbers[i] % 35 == 0) {
+            fprintf(output, "ПЯТЬСЕМЬ ");
+        } else if (numbers[i] % 5 == 0) {
+            fprintf(output, "ПЯТЬ ");
+        } else if (numbers[i] % 7 == 0) {
+            fprintf(output, "СЕМЬ ");
+        } else {
+            fprintf(output, "%d ", numbers[i]);
+        }
+    }
+    fclose(output);
+    
+    printf("Результат сохранен в output.txt\n");
+    return 0;
+}
