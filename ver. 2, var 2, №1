@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    srand(time(0));
+    
+    int N;
+    printf("Введите количество чисел: ");
+    scanf("%d", &N);
+    
+    FILE *file = fopen("input.txt", "w");
+    for (int i = 0; i < N; i++) {
+        fprintf(file, "%d ", rand() % 100); // Числа от 0 до 99
+    }
+    fclose(file);
+    
+    printf("Числа сохранены в input.txt\n");
+    return 0;
+}
