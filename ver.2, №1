@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    srand(time(0)); // Инициализация генератора случайных чисел
+    
+    int size;
+    printf("Введите размер матриц: ");
+    scanf("%d", &size);
+    
+    // Создаем две матрицы
+    int matrix1[size][size], matrix2[size][size];
+    
+    // Заполняем матрицы случайными числами от 0 до 9
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            matrix1[i][j] = rand() % 10;
+            matrix2[i][j] = rand() % 10;
+        }
+    }
+    
+    // Записываем матрицы в файл
+    FILE *file = fopen("input.txt", "w");
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fprintf(file, "%d ", matrix1[i][j]);
+        }
+        fprintf(file, "\n");
+    }
+    fprintf(file, "\n");
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fprintf(file, "%d ", matrix2[i][j]);
+        }
+        fprintf(file, "\n");
+    }
+    fclose(file);
+    
+    printf("Матрицы сохранены в input.txt\n");
+    return 0;
+}
