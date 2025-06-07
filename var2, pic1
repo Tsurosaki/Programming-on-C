@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+int main() {
+    srand(time(NULL));
+    clock_t start = clock();
+    
+    int N;
+    printf("Введите количество чисел: ");
+    scanf("%d", &N);
+    
+    // Создаем и заполняем массив
+    int* numbers = (int*)malloc(N * sizeof(int));
+    for (int i = 0; i < N; i++) {
+        numbers[i] = rand() % 100 + 1;
+    }
+    
+    // Записываем числа в файл
+    FILE* input = fopen("input.txt", "w");
+    for (int i = 0; i < N; i++) {
+        fprintf(input, "%d ", numbers[i]);
+    }
+    fclose(input);
+    free(numbers);
+    
+    // Читаем числа из файла и обрабатываем
+    input = fopen("input.txt", "r");
+    FILE* output = fopen("output.txt", "w");
+    
+    int num;
+    while (fscanf(input, "%d", &num) == 1) {
+        if (num % 35 == 0) {
+            fprintf(output, "ПЯТЬСЕМЬ ");
+        } else if (num % 5 == 0) {
+            fprintf(output, "ПЯТЬ ");
+        } else if (num % 7 == 0) {
+            fprintf(output, "СЕМЬ ");
+        } else {
+            fprintf(output, "%d ", num);
+        }
+    }
+    fclose(input);
+    fclose(output);
+    
+    // Часть 2: преобразование в матрицу
+    input = fopen("input.txt", "r");
+    int M;
+    printf("Введите количество столбцов для матрицы: ");
+    scanf("%d", &M);
+    
+    // Подсчитываем количество чисел
+    int count = 0;
+    while (fscanf(input, "%d", &num) == 1) count++;
+    rewind(input);
+    
+    int rows = count / M;
+    if (count % M != 0) rows++;
+    
+    // Создаем матрицу
+    int matrix = (int)malloc(rows * sizeof(int*));
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = (int*)malloc(M * sizeof(int));
+    }
+    
+    // Заполняем матрицу
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < M; j++) {
+            if (fscanf(input, "%d", &num) == 1) {
+                matrix[i][j] = num;
+            } else {
+                matrix[i][j] = 0; // Заполняем нулями, если чисел не хватает
+            }
+        }
+    }
+    fclose(input);
+    
+    // Выводим матрицу и суммы
+    printf("\nМатрица:\n");
+    int* row_sums = (int*)calloc(rows, sizeof(int));
+    int* col_sums = (int*)calloc(M, sizeof(int));
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < M; j++) {
+            printf("%d\t", matrix[i][j]);
+            row_sums[i] += matrix[i][j];
+            col_sums[j] += matrix[i][j];
+        }
+        printf("\n");
+    }
+    
+    printf("\nСуммы строк:\n");
+    for (int i = 0; i < rows; i++) {
+        printf("Строка %d: %d\n", i+1, row_sums[i]);
+    }
+    
+    printf("\nСуммы столбцов:\n");
+    for (int j = 0; j < M; j++) {
+        printf("Столбец %d: %d\n", j+1, col_sums[j]);
+    }
+    
+    // Освобождаем память
+    for (int i = 0; i < rows; i++) free(matrix[i]);
+    free(matrix);
+    free(row_sums);
+    free(col_sums);
+    
+    // Выводим время выполнения
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("\nВремя выполнения программы: %f секунд\n", time_spent);
+    
+    return 0;
+}
