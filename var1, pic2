@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+// Функция для вычисления количества дней между датами
+int days_between_dates(int day1, int month1, int year1, int day2, int month2, int year2) {
+    // Упрощенная реализация (для точного расчета нужна более сложная функция)
+    return abs((year2 - year1) * 365 + (month2 - month1) * 30 + (day2 - day1));
+}
+
+// Функция для создания квадратной матрицы
+int** create_square_matrix(int size) {
+    int matrix = (int)malloc(size * sizeof(int*));
+    for (int i = 0; i < size; i++) {
+        matrix[i] = (int*)malloc(size * sizeof(int));
+        for (int j = 0; j < size; j++) {
+            matrix[i][j] = rand() % 10;
+        }
+    }
+    return matrix;
+}
+
+// Функция для вычисления суммы элементов матрицы
+int matrix_sum(int** matrix, int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            sum += matrix[i][j];
+        }
+    }
+    return sum;
+}
+
+// Функция для записи матрицы в файл
+void write_matrix_to_file(FILE* file, int** matrix, int size) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fprintf(file, "%d ", matrix[i][j]);
+        }
+        fprintf(file, "\n");
+    }
+}
+
+int main() {
+    srand(time(NULL));
+    clock_t start = clock();
+    
+    // Часть 1: расчет дней между датами
+    FILE* date_file = fopen("input.txt", "r");
+    if (date_file == NULL) {
+        printf("Ошибка открытия файла input.txt\n");
+        return 1;
+    }
+    
+    int day1, month1, year1, day2, month2, year2;
+    fscanf(date_file, "%d %d %d", &day1, &month1, &year1);
+    fscanf(date_file, "%d %d %d", &day2, &month2, &year2);
+    fclose(date_file);
+    
+    int days = days_between_dates(day1, month1, year1, day2, month2, year2);
+    printf("Количество дней между датами: %d\n", days);
+    
+    // Часть 2: создание матриц с одинаковой суммой
+    int size;
+    printf("Введите размер квадратной матрицы: ");
+    scanf("%d", &size);
+    
+    int** matrix1 = NULL;
+    int** matrix2 = NULL;
+    int sum1 = 0, sum2 = 0;
+    int attempts = 0;
+    
+    do {
+        if (matrix1 != NULL) free_matrix(matrix1, size);
+        if (matrix2 != NULL) free_matrix(matrix2, size);
+        
+        matrix1 = create_square_matrix(size);
+        matrix2 = create_square_matrix(size);
+        
+        sum1 = matrix_sum(matrix1, size);
+        sum2 = matrix_sum(matrix2, size);
+        
+        attempts++;
+    } while (sum1 != sum2 && attempts < 1000);
+    
+    if (sum1 == sum2) {
+        FILE* output = fopen("output.txt", "w");
+        fprintf(output, "Матрица 1 (сумма = %d):\n", sum1);
+        write_matrix_to_file(output, matrix1, size);
+        
+        fprintf(output, "\nМатрица 2 (сумма = %d):\n", sum2);
+        write_matrix_to_file(output, matrix2, size);
+        fclose(output);
+        
+        printf("Найдены матрицы с одинаковой суммой (%d) после %d попыток\n", sum1, attempts);
+    } else {
+        printf("Не удалось найти матрицы с одинаковой суммой за 1000 попыток\n");
+    }
+    
+    // Освобождаем память
+    free_matrix(matrix1, size);
+    free_matrix(matrix2, size);
+    
+    // Выводим время выполнения
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Время выполнения программы: %f секунд\n", time_spent);
+    
+    return 0;
+}
