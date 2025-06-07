@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Функции для работы с матрицами (аналогичны предыдущим вариантам)
+// ...
+
+int main() {
+    srand(time(NULL));
+    clock_t start = clock();
+    
+    int rows, cols;
+    printf("Введите размеры матриц (строки столбцы): ");
+    scanf("%d %d", &rows, &cols);
+    
+    // Создаем и записываем матрицы в файл
+    int** matrix1 = create_matrix(rows, cols);
+    int** matrix2 = create_matrix(rows, cols);
+    fill_matrix(matrix1, rows, cols);
+    fill_matrix(matrix2, rows, cols);
+    
+    FILE* input = fopen("input.txt", "w");
+    write_matrix(input, matrix1, rows, cols);
+    fprintf(input, "\n");
+    write_matrix(input, matrix2, rows, cols);
+    fclose(input);
+    
+    free_matrix(matrix1, rows);
+    free_matrix(matrix2, rows);
+    
+    // Читаем матрицы из файла
+    input = fopen("input.txt", "r");
+    matrix1 = create_matrix(rows, cols);
+    matrix2 = create_matrix(rows, cols);
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            fscanf(input, "%d", &matrix1[i][j]);
+        }
+    }
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            fscanf(input, "%d", &matrix2[i][j]);
+        }
+    }
+    fclose(input);
+    
+    // Выполняем операции с матрицами
+    int** sum = add_matrices(matrix1, matrix2, rows, cols);
+    int** product = multiply_matrices(matrix1, rows, cols, matrix2, rows, cols);
+    
+    // Записываем результаты в файл
+    FILE* output = fopen("output.txt", "w");
+    fprintf(output, "Сумма матриц:\n");
+    write_matrix(output, sum, rows, cols);
+    
+    if (product != NULL) {
+        fprintf(output, "\nПроизведение матриц:\n");
+        write_matrix(output, product, rows, cols);
+    }
+    fclose(output);
+    
+    // Находим минимальный элемент в первой матрице
+    int min = matrix1[0][0];
+    int min_row = 0, min_col = 0;
+    int odd_count = 0;
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (matrix1[i][j] < min) {
+                min = matrix1[i][j];
+                min_row = i;
+                min_col = j;
+            }
+            if (matrix1[i][j] % 2 != 0) {
+                odd_count++;
+            }
+        }
+    }
+    
+    printf("Минимальный элемент матрицы 1: %d (строка %d, столбец %d)\n", min, min_row+1, min_col+1);
+    printf("Количество нечетных элементов в матрице 1: %d\n", odd_count);
+    
+    // Освобождаем память
+    free_matrix(matrix1, rows);
+    free_matrix(matrix2, rows);
+    free_matrix(sum, rows);
+    if (product != NULL) free_matrix(product, rows);
+    
+    // Выводим время выполнения
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Время выполнения программы: %f секунд\n", time_spent);
+    
+    return 0;
+}
